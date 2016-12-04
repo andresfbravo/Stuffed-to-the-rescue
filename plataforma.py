@@ -22,6 +22,7 @@ class Jugador(pygame.sprite.Sprite):
 		self.var_y=0
 		self.rect.x=px
 		self.rect.y=py
+		self.ganar=False
 
 	def gravedad(self):
 		if self.var_y==0:
@@ -53,15 +54,16 @@ class Jugador(pygame.sprite.Sprite):
 			else:
 				self.rect.top=b.rect.bottom
 			self.var_y=0
-
+		### colision con ventana de ganar ###
 		lc2=pygame.sprite.spritecollide(self,self.lv,True)		
 		for j in lc2:
 			if self.var_x>0:
 				self.rect.right=j.rect.left
+				self.ganar=True
 			else:
 				self.rect.left=j.rect.right
+				self.ganar=True
 
-		self.rect.y+=self.var_y
 		lc2=pygame.sprite.spritecollide(self,self.lv,False)
 		for j in lc2:
 			if self.var_y>0:
@@ -97,18 +99,33 @@ if __name__ == '__main__':
 	bloques=pygame.sprite.Group()
 	victoria=pygame.sprite.Group()
 
-	jp=Jugador(10,120)
+	jp=Jugador(220,550)
 	todos.add(jp)
 
-	vn=ventana(50,100,585,0)
+	vn=ventana(50,90,585,10)
 	todos.add(vn)
 
 	victoria.add(vn)
 
 
-	b1=Bloque(80,40,650,500)
+	b1=Bloque(50,40,650,500)
 	b2=Bloque(100,40,600,430)
-	b3=Bloque(100,40,0,300)
+	b16=Bloque(400,40,415,100)
+	b17=Bloque(150,40,150,600)
+	b18=Bloque(100,40,400,550) #aqui voy
+	b3=Bloque(100,40,-60,300)
+	b4=Bloque(100,40,-60,100)
+	b5=Bloque(100,40,-60,200)
+	b6=Bloque(100,40,-60,400)
+	b7=Bloque(100,40,-60,500)
+	b8=Bloque(100,40,-60,600)
+	b9=Bloque(100,40,1160,150)
+	b10=Bloque(100,40,1160,250)
+	b11=Bloque(100,40,1160,350)
+	b12=Bloque(100,40,1160,450)
+	b13=Bloque(100,40,1160,550)
+	b14=Bloque(100,40,1160,650)
+	b15=Bloque(100,40,1160,50)
 
 
 	bor3=Bloque(10,700,0,0)#BORDE IZQUIERDO
@@ -120,20 +137,50 @@ if __name__ == '__main__':
 	todos.add(b1)
 	todos.add(b2)
 	todos.add(b3)
+	todos.add(b4)
+	todos.add(b5)
+	todos.add(b6)
+	todos.add(b7)
+	todos.add(b8)
+	todos.add(b9)
+	todos.add(b10)
+	todos.add(b11)
+	todos.add(b12)
+	todos.add(b13)
+	todos.add(b14)
+	todos.add(b15)
+	todos.add(b16)
+	todos.add(b17)
+	todos.add(b18)
+
+	bloques.add(b1)
+	bloques.add(b2)
+	bloques.add(b3)
+	bloques.add(b4)
+	bloques.add(b5)
+	bloques.add(b6)
+	bloques.add(b7)
+	bloques.add(b8)
+	bloques.add(b9)
+	bloques.add(b10)
+	bloques.add(b11)
+	bloques.add(b12)
+	bloques.add(b13)
+	bloques.add(b14)
+	bloques.add(b15)
+	bloques.add(b16)
+	bloques.add(b17)
+	bloques.add(b18)
 
 	todos.add(bor3)
 	todos.add(bor4)
 	todos.add(bor5)
 	todos.add(bor6)
 
-	bloques.add(b1)
-	bloques.add(b2)
-	bloques.add(b3)
-
 	bloques.add(bor3)
 	bloques.add(bor4)
 	bloques.add(bor5)
-	bloques.add(bor4)
+	bloques.add(bor6)
 
 
 	jp.lb=bloques
@@ -145,6 +192,9 @@ if __name__ == '__main__':
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				fin=True
+
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				print (pygame.mouse.get_pos())
 
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_LEFT:
@@ -159,8 +209,8 @@ if __name__ == '__main__':
 
 				if event.key == pygame.K_UP:
 					#jp.var_x=0
-					jp.rect.y += -0.5
-					jp.var_y=-4
+					jp.rect.y +=-0.8
+					jp.var_y=-8
 					#jp.var_y=0
 
 				#if event.key == pygame.K_DOWN:
@@ -172,20 +222,51 @@ if __name__ == '__main__':
 					jp.var_x=0
 					jp.var_y=0
 
+			if event.type == pygame.KEYUP:
+				if event.key == pygame.K_LEFT:
+					jp.var_x=0
+					#jp.var_x=0
+					
+
+				if event.key == pygame.K_RIGHT:
+					jp.var_x=0
+					#jp.var_y=0
+					
+				
+				if event.key == pygame.K_UP:
+					#jp.var_x=0
+					#jp.rect.y =-0.5
+					jp.var_y=0
+					#jp.var_y=0
+
+				#if event.key == pygame.K_DOWN:
+				#	jp.var_x=0
+				#	jp.var_y=5
+
+				
+				if event.key == pygame.K_SPACE:
+					jp.var_x=0
+					jp.var_y=0
+				
 			if jp.rect.x >= ANCHO:
 				#jp.rect.x=0
-				print "si"
+				print "si", jp.rect.x, jp.rect.y
 				jp.var_x=0
 				jp.rect.x=ANCHO-jp.rect.width
-
+			"""
 			if jp.rect.y <= 15: #revisar
 				#jp.rect.x=0
-				print "si"
+				print "si este"
 				jp.var_y=0
-				jp.rect.y=12
-
+				jp.rect.y=18
+			
 			if jp.rect.y<15:
-				jp.var_y=30
+				print 
+				jp.rect.y=18
+			"""
+			if jp.ganar==True:
+				print "ha ganado"
+			jp.ganar=False
 
 
 		pantalla.fill(NEGRO)
